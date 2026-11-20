@@ -1,0 +1,38 @@
+# Dependensi & hasil build
+node_modules/
+dist/
+
+# Output test (screenshot + profil Chrome dari e2e/parity)
+tests/output/
+
+# Model hasil ekstrak (17 MB, aset game) — dipakai tests/patch.spec.js secara lokal
+*.glb
+*.gltf
+
+# Kunci dekripsi aset game — jangan pernah di-commit
+Keys.json
+
+# Bahan riset / reverse engineering, tidak dipakai aplikasi
+scratch_*/
+scratch_*
+pgr_shaders_extracted.js
+pgr_three_pipeline.js
+shader_*.glsl
+character_vert.glsl
+outline_shader.glsl
+outline_full.js
+ih_and_ah.js
+around_ah.txt
+nuxt_data.json
+all_materials_extras.json
+post_processing_snippet.js
+demo.html
+demo.js
+/beautycooler2.png
+
+# Editor & OS
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db

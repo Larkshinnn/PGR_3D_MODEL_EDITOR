@@ -1,0 +1,26 @@
+{
+  "name": "kurumi-3d-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node tests/pose.spec.js && node tests/fingers.spec.js && node tests/limbs.spec.js && node tests/patch.spec.js && node tests/editor.spec.js && node tests/glb.spec.js && node tests/pgrExport.spec.js",
+    "test:pose": "node tests/pose.spec.js",
+    "test:fingers": "node tests/fingers.spec.js",
+    "test:limbs": "node tests/limbs.spec.js",
+    "test:patch": "node tests/patch.spec.js",
+    "test:editor": "node tests/editor.spec.js",
+    "test:glb": "node tests/glb.spec.js",
+    "test:pgr-export": "node tests/pgrExport.spec.js",
+    "test:parity": "node tests/parity.spec.js"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1"
+  }
+}

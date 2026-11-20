@@ -1,0 +1,912 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1b1c1f" />
+    <meta name="description" content="Penampil model 3D Punishing: Gray Raven. Putar animasi, atur pose lewat titik sendi, ganti warna, dan ekspor hasilnya." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b1c1f'/%3E%3Cpath d='M9 22l7-5 7-7' fill='none' stroke='%2374767e' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3' fill='%23ecedee'/%3E%3Ccircle cx='16' cy='17' r='2.4' fill='%23ecedee'/%3E%3Ccircle cx='23' cy='10' r='3.4' fill='%23e8a23d'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>Construct Studio</title>
+  </head>
+  <body>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-grid" viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1.5" /><rect x="11" y="3" width="6" height="6" rx="1.5" /><rect x="3" y="11" width="6" height="6" rx="1.5" /><rect x="11" y="11" width="6" height="6" rx="1.5" /></symbol>
+      <symbol id="i-chevron" viewBox="0 0 20 20"><path d="M5.5 8l4.5 4.5L14.5 8" /></symbol>
+      <symbol id="i-back" viewBox="0 0 20 20"><path d="M11.5 5L6.5 10l5 5" /></symbol>
+      <symbol id="i-camera" viewBox="0 0 20 20"><path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h1.4l1.1-1.5h5L13.6 6H15a1.5 1.5 0 0 1 1.5 1.5V14a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 14z" /><circle cx="10" cy="10.6" r="2.6" /></symbol>
+      <symbol id="i-orbit" viewBox="0 0 20 20"><circle cx="10" cy="10" r="2.2" /><ellipse cx="10" cy="10" rx="7.4" ry="3.2" transform="rotate(-28 10 10)" /></symbol>
+      <symbol id="i-pose" viewBox="0 0 20 20"><circle cx="10" cy="4.3" r="1.8" /><path d="M10 6.6v5.2M4.8 6l5.2 1.8 5.2 2.4M6.8 16.8L10 11.8l3.4 5" /></symbol>
+      <symbol id="i-move" viewBox="0 0 20 20"><path d="M10 3v14M3 10h14M8 5l2-2 2 2M8 15l2 2 2-2M5 8l-2 2 2 2M15 8l2 2-2 2" /></symbol>
+      <symbol id="i-rotate" viewBox="0 0 20 20"><path d="M15.6 10a5.6 5.6 0 1 1-1.9-4.2M14.2 3v3h-3" /></symbol>
+      <symbol id="i-scale" viewBox="0 0 20 20"><rect x="3.5" y="10.5" width="6" height="6" rx="1" /><path d="M11.5 8.5l5-5M12.5 3.5h4v4" /></symbol>
+      <symbol id="i-frame" viewBox="0 0 20 20"><path d="M3.5 7V4.5a1 1 0 0 1 1-1H7M13 3.5h2.5a1 1 0 0 1 1 1V7M16.5 13v2.5a1 1 0 0 1-1 1H13M7 16.5H4.5a1 1 0 0 1-1-1V13" /><circle cx="10" cy="10" r="2" /></symbol>
+      <symbol id="i-play" viewBox="0 0 20 20"><path d="M7 4.6v10.8l8.6-5.4z" fill="currentColor" stroke="none" /></symbol>
+      <symbol id="i-pause" viewBox="0 0 20 20"><path d="M6.2 4.6h2.6v10.8H6.2zM11.2 4.6h2.6v10.8h-2.6z" fill="currentColor" stroke="none" /></symbol>
+      <symbol id="i-loop" viewBox="0 0 20 20"><path d="M4 9.5V9a3.5 3.5 0 0 1 3.5-3.5h8M13 3l2.5 2.5L13 8M16 10.5v.5a3.5 3.5 0 0 1-3.5 3.5h-8M7 17l-2.5-2.5L7 12" /></symbol>
+      <symbol id="i-bone" viewBox="0 0 20 20"><circle cx="5.4" cy="14.6" r="1.9" /><circle cx="14.6" cy="5.4" r="1.9" /><path d="M6.8 13.2l6.4-6.4" /></symbol>
+      <symbol id="i-undo" viewBox="0 0 20 20"><path d="M7 4.5L3.5 8 7 11.5M4 8h7.5a4 4 0 0 1 0 8H8" /></symbol>
+      <symbol id="i-redo" viewBox="0 0 20 20"><path d="M13 4.5L16.5 8 13 11.5M16 8H8.5a4 4 0 0 0 0 8H12" /></symbol>
+      <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5" /><path d="M12.8 12.8L16.5 16.5" /></symbol>
+      <symbol id="i-close" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" /></symbol>
+      <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.5 10s2.7-5 7.5-5 7.5 5 7.5 5-2.7 5-7.5 5-7.5-5-7.5-5z" /><circle cx="10" cy="10" r="2.2" /></symbol>
+      <symbol id="i-eye-off" viewBox="0 0 20 20"><path d="M4.6 6.9C3.2 8.3 2.5 10 2.5 10s2.7 5 7.5 5c1 0 1.9-.2 2.7-.5M8 5.3A7 7 0 0 1 10 5c4.8 0 7.5 5 7.5 5s-.6 1.3-1.9 2.6M3.5 3.5l13 13" /></symbol>
+      <symbol id="i-target" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" /><path d="M10 2.5v3M10 14.5v3M2.5 10h3M14.5 10h3" /></symbol>
+      <symbol id="i-trash" viewBox="0 0 20 20"><path d="M4.5 6h11M8 6V4.5h4V6M6 6l.6 9.5a1 1 0 0 0 1 1h4.8a1 1 0 0 0 1-1L14 6" /></symbol>
+      <symbol id="i-upload" viewBox="0 0 20 20"><path d="M10 12.5V3.5M6.5 7L10 3.5 13.5 7M4 13.5v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2" /></symbol>
+      <symbol id="i-download" viewBox="0 0 20 20"><path d="M10 3.5v9M6.5 9L10 12.5 13.5 9M4 13.5v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2" /></symbol>
+      <symbol id="i-external" viewBox="0 0 20 20"><path d="M8.5 5H5.5a1 1 0 0 0-1 1v8.5a1 1 0 0 0 1 1H14a1 1 0 0 0 1-1v-3M11.5 4.5h4v4M15.5 4.5L9.5 10.5" /></symbol>
+      <symbol id="i-clip" viewBox="0 0 20 20"><rect x="3" y="4.5" width="14" height="11" rx="2" /><path d="M8.6 7.7v4.6l3.8-2.3z" /></symbol>
+      <symbol id="i-layers" viewBox="0 0 20 20"><path d="M10 3.5l6.5 3.4L10 10.3 3.5 6.9zM3.5 10.2L10 13.6l6.5-3.4M3.5 13.3L10 16.7l6.5-3.4" /></symbol>
+      <symbol id="i-drop" viewBox="0 0 20 20"><path d="M10 3.2s4.8 4.9 4.8 8.3a4.8 4.8 0 0 1-9.6 0c0-3.4 4.8-8.3 4.8-8.3z" /></symbol>
+      <symbol id="i-attach" viewBox="0 0 20 20"><rect x="3.5" y="3.5" width="13" height="13" rx="2" /><path d="M10 7v6M7 10h6" /></symbol>
+      <symbol id="i-sun" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" /><path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M4.7 15.3l1.4-1.4M13.9 6.1l1.4-1.4" /></symbol>
+      <symbol id="i-skin" viewBox="0 0 20 20"><circle cx="10" cy="5" r="2.1" /><path d="M6.2 9.2c0-.9.8-1.5 1.8-1.5h4c1 0 1.8.6 1.8 1.5l-.6 4.2h-1.4v3.4h-3.6v-3.4H6.8z" /></symbol>
+      <symbol id="i-copy" viewBox="0 0 20 20"><rect x="7" y="7" width="9" height="9" rx="1.5" /><path d="M13 7V5.5A1.5 1.5 0 0 0 11.5 4H5.5A1.5 1.5 0 0 0 4 5.5v6A1.5 1.5 0 0 0 5.5 13H7" /></symbol>
+      <symbol id="i-restore" viewBox="0 0 20 20"><path d="M4.5 9.5a5.5 5.5 0 1 1 1.4 3.7M4.5 5.5v4h4" /></symbol>
+      <symbol id="i-folder" viewBox="0 0 20 20"><path d="M3.5 6.5A1.5 1.5 0 0 1 5 5h3.2l1.6 1.6H15a1.5 1.5 0 0 1 1.5 1.5v6.4A1.5 1.5 0 0 1 15 16H5a1.5 1.5 0 0 1-1.5-1.5z" /></symbol>
+      <symbol id="i-save" viewBox="0 0 20 20"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3h7.4L16 6.1V15.5A1.5 1.5 0 0 1 14.5 17h-9A1.5 1.5 0 0 1 4 15.5z" /><path d="M6.5 3v4h6V3M7 17v-5h6v5" /></symbol>
+      <symbol id="i-mesh" viewBox="0 0 20 20"><path d="M4 5.5L10 3l6 2.5v9L10 17l-6-2.5zM4 5.5l6 3 6-3M10 8.5V17" /></symbol>
+      <symbol id="i-help" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" /><path d="M8.1 7.9a2 2 0 1 1 3 1.7c-.7.4-1.1.9-1.1 1.7v.4" /><circle cx="10" cy="14" r=".6" fill="currentColor" /></symbol>
+      <symbol id="i-link" viewBox="0 0 20 20"><path d="M8.5 11.5l3-3M6.8 9.2L5.3 10.7a2.8 2.8 0 0 0 4 4l1.5-1.5M13.2 10.8l1.5-1.5a2.8 2.8 0 0 0-4-4L9.2 6.8" /></symbol>
+    </svg>
+
+    <div id="app" class="app">
+      <header class="topbar">
+        <button id="open-browser-modal-btn" class="model-switch" type="button" title="Ganti karakter atau model">
+          <svg class="icon"><use href="#i-grid" /></svg>
+          <span class="model-switch-text">
+            <span class="model-name" id="brand-title">Construct Studio</span>
+            <span class="model-sub" id="brand-sub">Pilih karakter</span>
+          </span>
+          <svg class="icon icon-s"><use href="#i-chevron" /></svg>
+        </button>
+
+        <div class="topbar-center">
+          <div class="seg seg-compact" id="editor-mode-switch" role="group" aria-label="Mode editor">
+            <button class="seg-btn is-active" data-editor-mode="object" type="button" title="Mode Object (pilih, geser, sembunyikan bagian)">Object</button>
+            <button class="seg-btn" data-editor-mode="edit" type="button" title="Mode Edit Face (Tab) — potong/hapus face pada bagian terpilih">Edit Face</button>
+            <button class="seg-btn" data-editor-mode="pose" type="button" title="Mode Pose (P)">Pose</button>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="global-undo" class="icon-btn" type="button" title="Urungkan (Ctrl+Z)" aria-label="Urungkan" disabled>
+            <svg class="icon"><use href="#i-undo" /></svg>
+          </button>
+          <button id="global-redo" class="icon-btn" type="button" title="Ulangi (Ctrl+Shift+Z)" aria-label="Ulangi" disabled>
+            <svg class="icon"><use href="#i-redo" /></svg>
+          </button>
+          <div class="menu-anchor">
+            <button id="file-menu-btn" class="btn btn-quiet" type="button" aria-haspopup="menu" aria-expanded="false">
+              <svg class="icon"><use href="#i-folder" /></svg>
+              <span class="hide-sm">File</span>
+              <svg class="icon icon-s"><use href="#i-chevron" /></svg>
+            </button>
+            <div id="file-menu-popover" class="popover-menu" role="menu" hidden>
+              <button class="menu-item" data-file-action="save-project" type="button" role="menuitem">
+                <span>Simpan proyek (.kproj)</span><kbd>Ctrl+S</kbd>
+              </button>
+              <button class="menu-item" data-file-action="save-local" type="button" role="menuitem">
+                <span>Simpan ke daftar lokal</span>
+              </button>
+              <button class="menu-item" data-file-action="open-project" type="button" role="menuitem">
+                <span>Buka file proyek (.kproj)…</span>
+              </button>
+              <button class="menu-item" data-file-action="open-local-projects" type="button" role="menuitem">
+                <span>Proyek tersimpan…</span>
+              </button>
+              <div class="menu-sep"></div>
+              <button class="menu-item" data-file-action="open-glb-char" type="button" role="menuitem">
+                <span>Buka .glb sebagai karakter…</span>
+              </button>
+              <button class="menu-item" data-file-action="add-character" type="button" role="menuitem">
+                <span>Tambah karakter ke scene…</span>
+              </button>
+              <button class="menu-item" data-file-action="add-glb-char" type="button" role="menuitem">
+                <span>Tambah .glb ke scene…</span>
+              </button>
+              <button class="menu-item" data-file-action="export-glb" type="button" role="menuitem">
+                <span>Ekspor model (.glb)…</span>
+              </button>
+              <button class="menu-item" data-file-action="export-png" type="button" role="menuitem">
+                <span>Simpan tangkapan layar (.png)</span>
+              </button>
+              <div class="menu-sep"></div>
+              <button class="menu-item" data-file-action="new-project" type="button" role="menuitem">
+                <span>Reset proyek (baru)</span>
+              </button>
+            </div>
+            <input id="open-project-input" type="file" accept=".kproj,.kproj.json,.json" hidden />
+            <input id="open-char-glb-input" type="file" accept=".glb,.gltf" hidden />
+            <input id="add-char-glb-input" type="file" accept=".glb,.gltf" hidden />
+          </div>
+          <button id="quick-screenshot-btn" class="btn btn-quiet" type="button" title="Simpan tangkapan layar PNG">
+            <svg class="icon"><use href="#i-camera" /></svg>
+            <span class="hide-sm">Tangkap layar</span>
+          </button>
+          <button id="shortcut-help-btn" class="icon-btn" type="button" title="Pintasan keyboard (?)" aria-label="Pintasan keyboard">
+            <svg class="icon"><use href="#i-help" /></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="viewport" id="viewport">
+        <canvas id="scene"></canvas>
+
+        <div class="pose-layer" id="pose-layer" hidden></div>
+
+        <!-- Banner pemulihan autosave -->
+        <div id="autosave-banner" class="autosave-banner" hidden>
+          <span id="autosave-banner-text">Proyek terakhir ditemukan.</span>
+          <button id="autosave-resume-btn" class="btn btn-s btn-primary" type="button">Lanjutkan</button>
+          <button id="autosave-dismiss-btn" class="btn btn-s btn-quiet" type="button">Abaikan</button>
+        </div>
+
+        <!-- Bar khusus Edit Mode (Tab) -->
+        <div id="editmode-bar" class="editmode-bar" hidden>
+          <span class="editmode-title">Mode Edit Face</span>
+          <div class="seg seg-compact" id="edit-select-tool">
+            <button class="seg-btn is-active" data-select-tool="click" type="button">Klik</button>
+            <button class="seg-btn" data-select-tool="box" type="button" title="Seret kotak untuk memilih face (B)">Box (B)</button>
+            <button class="seg-btn" data-select-tool="brush" type="button" title="Kuas seleksi (C)">Kuas (C)</button>
+            <button class="seg-btn" data-select-tool="linked" type="button" title="Pilih bagian terhubung (L)">Linked (L)</button>
+          </div>
+          <span id="editmode-count" class="num">0 face</span>
+          <button id="edit-select-all-btn" class="btn btn-s" type="button" title="Pilih semua / batal (A)">Semua (A)</button>
+          <button id="edit-delete-faces-btn" class="btn btn-s btn-danger" type="button" title="Hapus face terpilih (X)">Hapus (X)</button>
+          <button id="edit-separate-faces-btn" class="btn btn-s" type="button" title="Pisah jadi bagian baru (P)">Pisah (P)</button>
+          <button id="edit-done-btn" class="btn btn-s btn-primary" type="button" title="Kembali ke Mode Object (Tab)">Selesai</button>
+        </div>
+
+        <!-- Overlay seleksi kotak / kuas & modal transform badge -->
+        <div id="viewport-select-rect" class="select-rect" hidden></div>
+        <div id="viewport-brush-ring" class="brush-ring" hidden></div>
+        <div id="modal-transform-badge" class="modal-transform-badge" hidden></div>
+
+        <div class="tool-rail" id="viewport-toolbar" role="toolbar" aria-label="Alat viewport">
+          <button class="tool-btn is-active" data-gizmo="none" type="button" aria-label="Kamera" data-tip="Kamera" data-key="Esc">
+            <svg class="icon"><use href="#i-orbit" /></svg>
+          </button>
+          <button class="tool-btn" data-gizmo="pose" type="button" aria-label="Pose" data-tip="Pose" data-key="P">
+            <svg class="icon"><use href="#i-pose" /></svg>
+          </button>
+          <span class="tool-sep" aria-hidden="true"></span>
+          <button class="tool-btn" data-gizmo="translate" type="button" aria-label="Geser bagian" data-tip="Geser bagian" data-key="G">
+            <svg class="icon"><use href="#i-move" /></svg>
+          </button>
+          <button class="tool-btn" data-gizmo="rotate" type="button" aria-label="Putar bagian" data-tip="Putar bagian" data-key="R">
+            <svg class="icon"><use href="#i-rotate" /></svg>
+          </button>
+          <button class="tool-btn" data-gizmo="scale" type="button" aria-label="Skala bagian" data-tip="Skala bagian" data-key="S">
+            <svg class="icon"><use href="#i-scale" /></svg>
+          </button>
+          <span class="tool-sep" aria-hidden="true"></span>
+          <button class="tool-btn" id="open-add-menu-rail" type="button" aria-label="Tambah bagian" data-tip="Tambah (Shift+A)" data-key="Shift+A">
+            <svg class="icon"><use href="#i-attach" /></svg>
+          </button>
+          <button class="tool-btn" id="reset-camera" type="button" aria-label="Reset kamera" data-tip="Reset kamera" data-key="Home">
+            <svg class="icon"><use href="#i-frame" /></svg>
+          </button>
+        </div>
+
+        <!-- Menu Tambah (Shift+A) -->
+        <div id="add-menu-popover" class="popover-menu add-menu-popover" hidden>
+          <div class="menu-title">Tambah ke Karakter <kbd>Shift+A</kbd></div>
+          <div class="menu-subtitle">Primitif & Aksesori</div>
+          <div id="add-menu-props" class="menu-grid"></div>
+          <div class="menu-sep"></div>
+          <button class="menu-item" data-add-action="donor" type="button"><span>Bagian dari karakter lain…</span></button>
+          <button class="menu-item" data-add-action="import-glb" type="button"><span>Impor file .glb / .gltf…</span></button>
+          <button class="menu-item" data-add-action="patch-missing" type="button"><span>Tambal semua area kulit yang bolong</span></button>
+        </div>
+
+        <!-- Menu Parent ke Tulang (Ctrl+P) -->
+        <div id="parent-menu-popover" class="popover-menu add-menu-popover" hidden>
+          <div class="menu-title">Parent ke Tulang <kbd>Ctrl+P</kbd></div>
+          <div id="parent-menu-options" class="stack-tight"></div>
+        </div>
+
+        <div class="cast-strip" id="cast-strip" role="toolbar" aria-label="Karakter di scene" hidden></div>
+
+        <div class="viewport-status" aria-live="polite">
+          <span class="status-chip" id="vp-selected-label" hidden></span>
+          <span class="status-hint" id="viewport-hint"></span>
+        </div>
+
+        <div id="loading" class="loading">
+          <div class="loading-card">
+            <strong id="loading-title">Memuat model</strong>
+            <div class="progress"><div id="progress-bar"></div></div>
+            <span id="loading-sub">menyiapkan renderer</span>
+          </div>
+        </div>
+
+        <div id="toast" class="toast" role="status" hidden></div>
+      </main>
+
+      <footer class="transport" id="dock">
+        <button id="play" class="play-btn" type="button" title="Putar / jeda (Spasi)" aria-label="Putar">
+          <svg class="icon i-play"><use href="#i-play" /></svg>
+          <svg class="icon i-pause"><use href="#i-pause" /></svg>
+        </button>
+
+        <div class="now-playing">
+          <div class="now-line">
+            <span id="now-name">—</span>
+            <span id="now-badge" class="tag" hidden></span>
+          </div>
+          <span id="now-meta" class="now-meta"></span>
+        </div>
+
+        <div class="timeline">
+          <span id="time-current" class="time">0:00.0</span>
+          <input id="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Posisi animasi" />
+          <span id="time-total" class="time">0:00.0</span>
+        </div>
+
+        <div class="transport-options">
+          <label class="speed" title="Kecepatan animasi">
+            <input id="speed" type="range" min="0.1" max="2" step="0.1" value="1" aria-label="Kecepatan animasi" />
+            <span id="speed-val" class="num">1.0×</span>
+          </label>
+          <label class="toggle-chip" title="Ulangi animasi">
+            <input id="loop" type="checkbox" checked />
+            <span><svg class="icon"><use href="#i-loop" /></svg><span class="hide-sm">Ulang</span></span>
+          </label>
+          <label class="toggle-chip" title="Tampilkan semua tulang">
+            <input id="skeleton" type="checkbox" />
+            <span><svg class="icon"><use href="#i-bone" /></svg><span class="hide-sm">Tulang</span></span>
+          </label>
+        </div>
+      </footer>
+
+      <aside class="inspector" id="panel" aria-label="Inspektor">
+        <nav class="inspector-tabs" role="tablist" aria-label="Panel inspektor">
+          <button class="tab" data-tab="pose" role="tab" aria-selected="false" aria-controls="tab-pose" type="button">
+            <svg class="icon"><use href="#i-pose" /></svg><span>Pose</span>
+          </button>
+          <button class="tab is-active" data-tab="anim" role="tab" aria-selected="true" aria-controls="tab-anim" type="button">
+            <svg class="icon"><use href="#i-clip" /></svg><span>Animasi</span>
+          </button>
+          <button class="tab" data-tab="edit" role="tab" aria-selected="false" aria-controls="tab-edit" type="button">
+            <svg class="icon"><use href="#i-layers" /></svg><span>Bagian</span>
+          </button>
+          <button class="tab" data-tab="color" role="tab" aria-selected="false" aria-controls="tab-color" type="button">
+            <svg class="icon"><use href="#i-drop" /></svg><span>Warna</span>
+          </button>
+          <button class="tab" data-tab="kitbash" role="tab" aria-selected="false" aria-controls="tab-kitbash" type="button">
+            <svg class="icon"><use href="#i-attach" /></svg><span>Tambah</span>
+          </button>
+          <button class="tab" data-tab="scene" role="tab" aria-selected="false" aria-controls="tab-scene" type="button">
+            <svg class="icon"><use href="#i-sun" /></svg><span>Tampilan</span>
+          </button>
+        </nav>
+
+        <div class="inspector-body">
+          <!-- POSE -->
+          <section class="tab-panel" id="tab-pose" role="tabpanel" hidden>
+            <header class="panel-head">
+              <h2>Pose</h2>
+              <div class="head-actions">
+                <button id="pose-undo" class="icon-btn" type="button" title="Urungkan (Ctrl+Z)" aria-label="Urungkan" disabled>
+                  <svg class="icon"><use href="#i-undo" /></svg>
+                </button>
+                <button id="pose-redo" class="icon-btn" type="button" title="Ulangi (Ctrl+Shift+Z)" aria-label="Ulangi" disabled>
+                  <svg class="icon"><use href="#i-redo" /></svg>
+                </button>
+                <button id="pose-reset" class="btn btn-s" type="button" disabled>Reset pose</button>
+              </div>
+            </header>
+
+            <div class="panel-scroll">
+              <p id="pose-unsupported" class="notice" hidden>
+                Rangka model ini tidak dikenali, jadi titik pose tidak tersedia. Ekspresi wajah dan skala di bawah tetap bisa dipakai.
+              </p>
+
+              <section class="group" id="pose-guide">
+                <ul class="pose-legend">
+                  <li>
+                    <span class="legend-dot" data-kind="end"></span>
+                    <span><strong>Tangan dan kaki</strong> — seret untuk menggerakkan seluruh lengan atau tungkai.</span>
+                  </li>
+                  <li>
+                    <span class="legend-dot" data-kind="joint"></span>
+                    <span><strong>Bahu, siku, lutut</strong> — seret untuk mengarahkan sendinya.</span>
+                  </li>
+                  <li>
+                    <span class="legend-dot" data-kind="body"></span>
+                    <span><strong>Pinggul, dada, kepala</strong> — seret untuk menggeser atau memiringkan badan.</span>
+                  </li>
+                  <li>
+                    <span class="legend-dot" data-kind="finger"></span>
+                    <span><strong>Jari</strong> — klik titik tangan atau dekatkan kamera ke tangan, lalu seret titik kecil di ujung jari.</span>
+                  </li>
+                </ul>
+                <p class="note">
+                  Klik satu titik untuk memutarnya dengan gelang warna. Klik dua kali untuk mengembalikan bagian itu. Hanya sudut sendi yang berubah, jadi panjang tulang dan bentuk model tetap.
+                </p>
+              </section>
+
+              <section class="group">
+                <div class="group-head">
+                  <h3>Titik terpilih</h3>
+                  <button id="pose-reset-part" class="btn btn-s" type="button" disabled>Reset bagian ini</button>
+                </div>
+                <p id="pose-selected-name" class="selected-name is-empty">Belum ada titik dipilih</p>
+              </section>
+
+              <section class="group" id="pose-fingers" hidden>
+                <div class="group-head">
+                  <h3 id="pose-fingers-title">Jari tangan</h3>
+                  <div class="head-actions">
+                    <button id="pose-fingers-zoom" class="btn btn-s" type="button" title="Dekatkan kamera ke tangan ini">Dekatkan</button>
+                    <button id="pose-fingers-reset" class="btn btn-s" type="button" disabled>Reset jari</button>
+                  </div>
+                </div>
+                <div class="chip-grid chip-grid-3" id="pose-hand-shapes"></div>
+                <div class="finger-list" id="pose-finger-list"></div>
+                <label class="slider-row">
+                  <span>Renggang</span>
+                  <input id="pose-hand-spread" type="range" min="-100" max="100" step="1" value="0" />
+                  <span id="pose-hand-spread-val" class="num">0</span>
+                </label>
+                <p class="note">Geser untuk menekuk tiap jari, atau seret titik kecil di ujung jari langsung pada model. Jari hanya menekuk di ruasnya, jadi bentuk tangan tetap wajar.</p>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Perilaku</h3></div>
+                <label class="switch-row">
+                  <span>Kunci telapak kaki<small>Kaki tetap di tempat saat pinggul atau lutut digeser.</small></span>
+                  <input id="pose-pin-feet" type="checkbox" checked />
+                </label>
+                <label class="switch-row">
+                  <span>Kunci tangan<small>Tangan tetap di tempat saat badan, bahu, atau siku digeser.</small></span>
+                  <input id="pose-pin-hands" type="checkbox" />
+                </label>
+                <label class="switch-row">
+                  <span>Jaga bentuk sendi<small id="pose-correctives-status">Belum aktif.</small></span>
+                  <input id="pose-correctives" type="checkbox" checked />
+                </label>
+                <label class="switch-row">
+                  <span>Rambut dan kain mengikuti pose<small>Saat pose diubah, rambut, rok, dan pita jatuh mengikuti gravitasi dan tidak menembus badan.</small></span>
+                  <input id="pose-collide" type="checkbox" checked />
+                </label>
+              </section>
+
+              <section class="group">
+                <div class="group-head">
+                  <h3>Seluruh karakter</h3>
+                  <button id="playground-reset" class="btn btn-s" type="button">Reset</button>
+                </div>
+                <label class="slider-row">
+                  <span>Skala</span>
+                  <input id="model-scale" type="range" min="0.5" max="2" step="0.01" value="1" />
+                  <span id="model-scale-val" class="num">1.00×</span>
+                </label>
+                <label class="slider-row">
+                  <span>Putar</span>
+                  <input id="model-rotate" type="range" min="-180" max="180" step="1" value="0" />
+                  <span id="model-rotate-val" class="num">0°</span>
+                </label>
+                <button id="bind-pose" class="btn btn-block" type="button">Mulai dari pose dasar</button>
+              </section>
+
+              <section class="group" id="pose-library-group">
+                <div class="group-head">
+                  <h3>Library Pose</h3>
+                  <div class="head-actions">
+                    <button id="pose-import-btn" class="btn btn-s" type="button">Impor</button>
+                    <button id="pose-export-all-btn" class="btn btn-s" type="button">Ekspor</button>
+                  </div>
+                  <input id="pose-import-input" type="file" accept=".json,.pose.json" hidden />
+                </div>
+                <div class="inline-form">
+                  <input id="pose-save-name" class="text-input" type="text" placeholder="Nama pose (mis. Victory)..." autocomplete="off" />
+                  <button id="pose-save-btn" class="btn btn-primary" type="button">Simpan</button>
+                </div>
+                <div class="pose-apply-opts">
+                  <select id="pose-apply-scope" class="field" aria-label="Bagian pose yang diterapkan">
+                    <option value="all">Terapkan: Seluruh tubuh</option>
+                    <option value="upper">Badan atas & tangan</option>
+                    <option value="lower">Pinggul & kaki</option>
+                    <option value="hands">Tangan & jari saja</option>
+                  </select>
+                  <label class="check-pill" title="Cerminkan pose kiri ↔ kanan">
+                    <input id="pose-apply-mirror" type="checkbox" />
+                    <span>Mirror L↔R</span>
+                  </label>
+                </div>
+                <div id="pose-library-grid" class="pose-grid">
+                  <div class="empty-state">Belum ada pose tersimpan. Atur pose lalu klik Simpan.</div>
+                </div>
+              </section>
+
+              <section class="group">
+                <div class="group-head">
+                  <h3>Ekspresi wajah</h3>
+                  <button id="morph-reset" class="btn btn-s" type="button">Reset</button>
+                </div>
+                <select id="morph-mesh" class="field" aria-label="Bagian yang punya ekspresi"></select>
+                <div id="morph-list" class="morph-list"></div>
+              </section>
+            </div>
+          </section>
+
+          <!-- ANIMASI -->
+          <section class="tab-panel" id="tab-anim" role="tabpanel">
+            <header class="panel-head">
+              <h2>Animasi</h2>
+              <span class="head-meta" id="clip-count">memuat</span>
+            </header>
+            <div class="panel-fixed">
+              <label class="search-field">
+                <svg class="icon"><use href="#i-search" /></svg>
+                <input id="search" type="search" placeholder="Cari animasi" autocomplete="off" spellcheck="false" />
+              </label>
+            </div>
+            <div id="clip-list" class="clip-list" role="listbox" aria-label="Daftar animasi"></div>
+          </section>
+
+          <!-- BAGIAN -->
+          <section class="tab-panel" id="tab-edit" role="tabpanel" hidden>
+            <header class="panel-head">
+              <h2>Bagian</h2>
+              <div class="head-actions">
+                <button id="outliner-add-btn" class="icon-btn" type="button" title="Tambah bagian (Shift+A)" aria-label="Tambah bagian">
+                  <svg class="icon"><use href="#i-attach" /></svg>
+                </button>
+                <button id="outliner-dup-btn" class="icon-btn" type="button" title="Duplikat terpilih (Shift+D)" aria-label="Duplikat">
+                  <svg class="icon"><use href="#i-copy" /></svg>
+                </button>
+                <button id="outliner-edit-face-btn" class="icon-btn" type="button" title="Mode Edit Face (Tab)" aria-label="Mode Edit Face">
+                  <svg class="icon"><use href="#i-mesh" /></svg>
+                </button>
+                <button id="parts-unsolo" class="btn btn-s" type="button" hidden>Lepas solo</button>
+                <button id="parts-reset" class="btn btn-s" type="button">Reset</button>
+              </div>
+            </header>
+            <div class="panel-scroll">
+              <section class="group">
+                <label class="switch-row">
+                  <span>Tampilkan semua</span>
+                  <input id="parts-all" type="checkbox" checked />
+                </label>
+                <div class="bulk-rewrite-row">
+                  <span class="field-hint">Saat di-hide:</span>
+                  <button id="rewrite-all-on-btn" class="btn btn-s" type="button" title="Aktifkan timpa kulit untuk semua bagian pakaian">Semua timpa kulit</button>
+                  <button id="rewrite-all-off-btn" class="btn btn-s" type="button" title="Biarkan kosong saat bagian mana pun di-hide">Semua kosong</button>
+                </div>
+                <div id="parts-list" class="row-list"></div>
+                <div id="outliner-extra-wrap" hidden>
+                  <div class="subhead">Tambahan & Salinan</div>
+                  <div id="outliner-extra-list" class="row-list"></div>
+                </div>
+                <p class="note">Ikon orang (<svg class="icon icon-inline"><use href="#i-skin" /></svg>) mengatur apakah saat bagian ini di-hide/hapus, area di bawahnya <strong>ditimpa kulit</strong> atau <strong>tetap kosong</strong>. Klik ganda nama untuk rename; Shift/Ctrl+klik pilih banyak; X untuk hapus.</p>
+              </section>
+
+              <section class="group" id="deleted-parts-group" hidden>
+                <div class="group-head">
+                  <h3>Terhapus (<span id="deleted-parts-count">0</span>)</h3>
+                  <button id="restore-all-deleted-btn" class="btn btn-s" type="button">Pulihkan semua</button>
+                </div>
+                <div id="deleted-parts-list" class="row-list"></div>
+              </section>
+
+              <section class="group" id="patch-group">
+                <div class="group-head">
+                  <h3>Tambal tubuh</h3>
+                  <span id="patch-coverage-badge" class="tag">100%</span>
+                </div>
+                <p class="note note-top">Mengisi area tubuh yang hilang saat baju atau celana disembunyikan. Otomatis mendeteksi pinggul, badan, paha, kaki, dan lengan.</p>
+                <label class="switch-row">
+                  <span>Tambal otomatis<small>Menambal otomatis bagian yang bertanda Timpa kulit.</small></span>
+                  <input id="patch-auto" type="checkbox" checked />
+                </label>
+                <div class="seg" id="patch-mode" aria-label="Bentuk tambalan">
+                  <button class="seg-btn is-active" data-mode="shell" type="button" title="Langsung menimpa bentuk bagian yang disembunyikan dengan warna kulit">Ikuti baju</button>
+                  <button class="seg-btn" data-mode="hybrid" type="button" title="Badan &amp; tungkai polos yang pas bentuk, tangan ikuti sarung tangan">Rapi</button>
+                  <button class="seg-btn" data-mode="plain" type="button" title="Semua bagian dibuat mulus prosedural">Polos</button>
+                </div>
+                <div class="seg" id="patch-fill-style" aria-label="Gaya isian tambalan">
+                  <button class="seg-btn is-active" data-fill="skin" type="button">Kulit karakter</button>
+                  <button class="seg-btn" data-fill="baselayer" type="button">Base layer</button>
+                </div>
+                <label class="switch-row" id="patch-baselayer-row" hidden>
+                  <span>Warna base layer</span>
+                  <input id="patch-baselayer-color" type="color" value="#252730" />
+                </label>
+                <div class="chip-grid" id="patch-list"></div>
+                <div class="patch-actions-row">
+                  <button id="patch-fill-all-btn" class="btn btn-s btn-block" type="button">Tambal semua yang bolong</button>
+                </div>
+                <label class="slider-row">
+                  <span>Tebal</span>
+                  <input id="patch-thickness" type="range" min="0.7" max="1.4" step="0.01" value="1" />
+                  <span id="patch-thickness-val" class="num">1.00×</span>
+                </label>
+                <label class="switch-row">
+                  <span>Tampilkan area bolong (Debug)<small>Merah = belum tertambal, Hijau = sudah ditambal.</small></span>
+                  <input id="patch-debug-toggle" type="checkbox" />
+                </label>
+              </section>
+
+              <section class="group" id="selected-transform-section">
+                <div class="group-head">
+                  <h3>Posisi <span class="head-target" id="transform-target-name">Model utama</span></h3>
+                  <div class="head-actions">
+                    <button id="part-parent-btn" class="btn btn-s" type="button" title="Tempel ke tulang atau skin otomatis (Ctrl+P)">Parent</button>
+                    <button id="part-transform-reset" class="btn btn-s" type="button">Reset</button>
+                  </div>
+                </div>
+                <label class="slider-row">
+                  <span>X</span>
+                  <input id="part-pos-x" type="range" min="-1.5" max="1.5" step="0.01" value="0" />
+                  <span id="part-pos-x-val" class="num">0.00</span>
+                </label>
+                <label class="slider-row">
+                  <span>Y</span>
+                  <input id="part-pos-y" type="range" min="-1.5" max="1.5" step="0.01" value="0" />
+                  <span id="part-pos-y-val" class="num">0.00</span>
+                </label>
+                <label class="slider-row">
+                  <span>Z</span>
+                  <input id="part-pos-z" type="range" min="-1.5" max="1.5" step="0.01" value="0" />
+                  <span id="part-pos-z-val" class="num">0.00</span>
+                </label>
+                <label class="slider-row">
+                  <span>Skala</span>
+                  <input id="part-scale" type="range" min="0.1" max="3" step="0.02" value="1" />
+                  <span id="part-scale-val" class="num">1.00×</span>
+                </label>
+                <p class="note">Menggeser bagian memindahkan mesh itu sendiri. Untuk menggerakkan lengan atau kaki tanpa merusak bentuk, pakai tab Pose.</p>
+              </section>
+            </div>
+          </section>
+
+          <!-- WARNA -->
+          <section class="tab-panel" id="tab-color" role="tabpanel" hidden>
+            <header class="panel-head">
+              <h2>Warna</h2>
+              <button id="color-reset-btn" class="btn btn-s" type="button">Reset</button>
+            </header>
+            <div class="panel-scroll">
+              <section class="group">
+                <div class="group-head"><h3>Bagian yang diwarnai</h3></div>
+                <select id="color-target-select" class="field" aria-label="Pilih bagian untuk diwarnai">
+                  <option value="__all__">Semua bagian</option>
+                </select>
+                <div class="palette-grid" id="color-palette-grid" aria-label="Palet siap pakai"></div>
+              </section>
+
+              <section class="group">
+                <div class="group-head">
+                  <h3>Geser warna tekstur</h3>
+                  <button id="hsl-reset-btn" class="btn btn-s" type="button">Nolkan</button>
+                </div>
+                <label class="slider-row">
+                  <span>Rona</span>
+                  <input id="color-hue" type="range" min="-180" max="180" step="1" value="0" />
+                  <span id="color-hue-val" class="num">0°</span>
+                </label>
+                <label class="slider-row">
+                  <span>Saturasi</span>
+                  <input id="color-sat" type="range" min="-100" max="100" step="1" value="0" />
+                  <span id="color-sat-val" class="num">0%</span>
+                </label>
+                <label class="slider-row">
+                  <span>Terang</span>
+                  <input id="color-light" type="range" min="-50" max="50" step="1" value="0" />
+                  <span id="color-light-val" class="num">0%</span>
+                </label>
+                <p class="note">Menggeser warna tekstur asli. Detail hitam dan putih tidak ikut berubah.</p>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Shader cel</h3></div>
+                <div class="swatch-grid">
+                  <label class="swatch-field">
+                    <span>Dasar</span>
+                    <input id="color-albedo" type="color" value="#ffffff" />
+                  </label>
+                  <label class="swatch-field">
+                    <span>Tint</span>
+                    <input id="color-global-tint" type="color" value="#ffffff" />
+                  </label>
+                  <label class="swatch-field">
+                    <span>Bayangan 1</span>
+                    <input id="color-shadow1" type="color" value="#b59ea4" />
+                  </label>
+                  <label class="swatch-field">
+                    <span>Bayangan 2</span>
+                    <input id="color-shadow2" type="color" value="#7f6a72" />
+                  </label>
+                  <label class="swatch-field">
+                    <span>Rim</span>
+                    <input id="color-rim" type="color" value="#ffffff" />
+                  </label>
+                  <label class="swatch-field">
+                    <span>Outline</span>
+                    <input id="color-outline" type="color" value="#201414" />
+                  </label>
+                </div>
+
+                <label class="slider-row">
+                  <span>Rim</span>
+                  <input id="slider-rim-intensity" type="range" min="0" max="2" step="0.02" value="0.35" />
+                  <span id="slider-rim-intensity-val" class="num">0.35</span>
+                </label>
+                <label class="slider-row">
+                  <span>Batas cel</span>
+                  <input id="slider-cel-threshold" type="range" min="0.05" max="0.95" step="0.01" value="0.50" />
+                  <span id="slider-cel-threshold-val" class="num">0.50</span>
+                </label>
+                <label class="slider-row">
+                  <span>Kehalusan</span>
+                  <input id="slider-cel-smooth" type="range" min="0.005" max="0.5" step="0.005" value="0.05" />
+                  <span id="slider-cel-smooth-val" class="num">0.05</span>
+                </label>
+                <label class="slider-row">
+                  <span>Bloom</span>
+                  <input id="slider-bloom-factor" type="range" min="0" max="2.5" step="0.05" value="0.15" />
+                  <span id="slider-bloom-factor-val" class="num">0.15</span>
+                </label>
+                <label class="slider-row">
+                  <span>Tebal outline</span>
+                  <input id="slider-outline-width" type="range" min="0" max="1.2" step="0.01" value="0.25" />
+                  <span id="slider-outline-width-val" class="num">0.25</span>
+                </label>
+
+                <label class="switch-row">
+                  <span>Outline</span>
+                  <input id="toggle-part-outline" type="checkbox" checked />
+                </label>
+                <label class="switch-row">
+                  <span>Wireframe</span>
+                  <input id="toggle-part-wireframe" type="checkbox" />
+                </label>
+              </section>
+            </div>
+          </section>
+
+          <!-- TAMBAH -->
+          <section class="tab-panel" id="tab-kitbash" role="tabpanel" hidden>
+            <header class="panel-head">
+              <h2>Tambah</h2>
+              <button id="clear-kitbash-btn" class="btn btn-s" type="button">Hapus semua</button>
+            </header>
+            <div class="panel-scroll">
+              <section class="group">
+                <div class="group-head"><h3>Aksesori</h3></div>
+                <label class="field-label" for="kitbash-socket-select">Ditaruh di</label>
+                <select id="kitbash-socket-select" class="field">
+                  <option value="pick">Tempat yang saya klik di model</option>
+                  <option value="head">Kepala</option>
+                  <option value="chest">Punggung / dada</option>
+                  <option value="rightHand">Tangan kanan</option>
+                  <option value="leftHand">Tangan kiri</option>
+                  <option value="weapon1">Slot senjata 1</option>
+                  <option value="weapon2">Slot senjata 2</option>
+                  <option value="pelvis">Pinggang</option>
+                  <option value="root">Lantai</option>
+                </select>
+                <div class="chip-grid" id="builtin-props-grid"></div>
+                <label class="btn btn-block btn-dashed" for="upload-glb-input">
+                  <svg class="icon"><use href="#i-upload" /></svg>
+                  <span>Impor file .glb / .gltf</span>
+                  <input id="upload-glb-input" type="file" accept=".glb,.gltf" hidden />
+                </label>
+                <p class="note">Aksesori menempel ke tulang terdekat dari tempat yang diklik, jadi ikut bergerak. Geser, putar, atau ubah ukurannya dengan alat di kiri; Delete untuk menghapus.</p>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Bagian dari karakter lain</h3></div>
+                <p class="note note-top">Sembunyikan baju, rambut, atau senjata di tab Bagian, lalu pasang penggantinya dari karakter lain.</p>
+                <button id="pick-donor-model-btn" class="btn btn-block btn-select" type="button">
+                  <span id="donor-model-label">Pilih karakter sumber</span>
+                  <svg class="icon icon-s"><use href="#i-chevron" /></svg>
+                </button>
+                <div class="seg" id="donor-bind-mode">
+                  <button class="seg-btn is-active" data-bind="skeleton" type="button" title="Bagian ikut bergerak bersama tulang karakter">Ikut tulang</button>
+                  <button class="seg-btn" data-bind="socket" type="button" title="Tempel kaku ke satu titik">Tempel di titik</button>
+                </div>
+                <div id="donor-parts-list" class="row-list row-list-box">
+                  <div class="empty-state">Belum ada karakter sumber.</div>
+                </div>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Terpasang</h3></div>
+                <div id="active-kitbash-list" class="row-list">
+                  <div class="empty-state">Belum ada aset tambahan.</div>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <!-- TAMPILAN -->
+          <section class="tab-panel" id="tab-scene" role="tabpanel" hidden>
+            <header class="panel-head">
+              <h2>Tampilan</h2>
+            </header>
+            <div class="panel-scroll">
+              <section class="group">
+                <div class="group-head"><h3>Shader</h3></div>
+                <div class="seg" id="material-mode" aria-label="Mode material">
+                  <button class="seg-btn" data-material="pbr" type="button">PBR asli</button>
+                  <button class="seg-btn is-active" data-material="pgr" type="button">Gaya PGR</button>
+                </div>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Latar</h3></div>
+                <div class="seg" id="stage-mode">
+                  <button class="seg-btn" data-stage="studio" type="button">Terang</button>
+                  <button class="seg-btn is-active" data-stage="dark" type="button">Gelap</button>
+                </div>
+                <label class="switch-row">
+                  <span>Warna latar</span>
+                  <input id="custom-bg-color" type="color" value="#303236" class="swatch-input" />
+                </label>
+                <label class="switch-row">
+                  <span>Grid lantai</span>
+                  <input id="toggle-grid" type="checkbox" />
+                </label>
+                <label class="switch-row">
+                  <span>Bayangan lantai</span>
+                  <input id="toggle-shadow" type="checkbox" checked />
+                </label>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Cahaya</h3></div>
+                <label class="slider-row">
+                  <span>Arah</span>
+                  <input id="light-yaw" type="range" min="0" max="360" step="1" value="175" />
+                  <span id="light-yaw-val" class="num">175°</span>
+                </label>
+                <label class="slider-row">
+                  <span>Tinggi</span>
+                  <input id="light-pitch" type="range" min="5" max="85" step="1" value="30" />
+                  <span id="light-pitch-val" class="num">30°</span>
+                </label>
+              </section>
+
+              <section class="group">
+                <div class="group-head"><h3>Ekspor & Simpan</h3></div>
+                <label class="switch-row">
+                  <span>Sertakan tambalan tubuh</span>
+                  <input id="export-opt-patches" type="checkbox" checked />
+                </label>
+                <label class="switch-row">
+                  <span>Bake pose ke mesh (statis)</span>
+                  <input id="export-opt-bake-pose" type="checkbox" />
+                </label>
+                <label class="switch-row">
+                  <span>Sertakan animasi asli</span>
+                  <input id="export-opt-anims" type="checkbox" />
+                </label>
+                <div class="stack">
+                  <button id="export-project-btn" class="btn btn-block" type="button">
+                    <svg class="icon"><use href="#i-save" /></svg><span>Simpan proyek (.kproj)</span>
+                  </button>
+                  <button id="export-png-btn" class="btn btn-block" type="button">
+                    <svg class="icon"><use href="#i-camera" /></svg><span>Simpan PNG</span>
+                  </button>
+                  <button id="export-glb-btn" class="btn btn-block btn-primary" type="button">
+                    <svg class="icon"><use href="#i-download" /></svg><span>Unduh model .glb</span>
+                  </button>
+                </div>
+                <p class="note">File .glb langsung bisa dibuka di Blender (File › Import › glTF 2.0), lengkap dengan pose, jari, tambalan, dan ekspresi wajah. Warnanya memakai tekstur biasa, tanpa shading toon. Kalau animasi asli disertakan, Blender akan memutarnya dan menimpa pose yang kamu atur; matikan opsi itu untuk menyimpan pose. Bake pose membuat mesh statis tanpa tulang.</p>
+                <a id="source-link" class="text-link" href="#" target="_blank" rel="noreferrer">
+                  Manifest model <svg class="icon icon-s"><use href="#i-external" /></svg>
+                </a>
+              </section>
+            </div>
+          </section>
+        </div>
+      </aside>
+
+      <!-- Katalog karakter: halaman awal dan dialog ganti model -->
+      <div id="catalog-overlay" class="catalog" hidden aria-modal="true" role="dialog" aria-labelledby="catalog-title">
+        <div class="catalog-shell">
+          <header class="catalog-header">
+            <div class="catalog-heading">
+              <button id="catalog-back-btn" class="btn btn-quiet catalog-back" type="button" hidden>
+                <svg class="icon"><use href="#i-back" /></svg><span>Semua karakter</span>
+              </button>
+              <h2 id="catalog-title">Pilih karakter</h2>
+              <p id="catalog-subtitle">Model 3D dan animasi dari Punishing: Gray Raven.</p>
+            </div>
+            <button id="catalog-close-btn" class="icon-btn icon-btn-l" type="button" title="Tutup (Esc)" aria-label="Tutup katalog">
+              <svg class="icon"><use href="#i-close" /></svg>
+            </button>
+          </header>
+
+          <div id="catalog-step-chars" class="catalog-body">
+            <div class="catalog-toolbar">
+              <label class="search-field catalog-search">
+                <svg class="icon"><use href="#i-search" /></svg>
+                <input id="catalog-search-input" type="search" placeholder="Cari nama karakter atau frame" autocomplete="off" spellcheck="false" />
+                <span class="search-count" id="catalog-char-count"></span>
+              </label>
+              <div class="filter-tabs" id="catalog-element-filters" role="group" aria-label="Saring menurut elemen">
+                <button class="filter-tab is-active" data-element="all" type="button">Semua</button>
+              </div>
+            </div>
+            <div id="catalog-char-grid" class="char-grid" role="list"></div>
+          </div>
+
+          <div id="catalog-step-models" class="catalog-body" hidden>
+            <div class="char-banner" id="selected-char-banner"></div>
+            <div id="catalog-models-grid" class="model-grid" role="list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Proyek Tersimpan -->
+      <div id="projects-modal" class="catalog mini-modal" hidden aria-modal="true" role="dialog" aria-labelledby="projects-modal-title">
+        <div class="catalog-shell mini-shell">
+          <header class="catalog-header">
+            <div class="catalog-heading">
+              <h2 id="projects-modal-title">Proyek tersimpan</h2>
+              <p>Muat ulang proyek yang disimpan di browser ini atau ekspor sebagai file .kproj.</p>
+            </div>
+            <button id="projects-modal-close" class="icon-btn icon-btn-l" type="button" aria-label="Tutup">
+              <svg class="icon"><use href="#i-close" /></svg>
+            </button>
+          </header>
+          <div id="projects-list" class="catalog-body project-list"></div>
+        </div>
+      </div>
+
+      <!-- Modal Bantuan Pintasan Keyboard -->
+      <div id="shortcut-help-modal" class="catalog mini-modal" hidden aria-modal="true" role="dialog" aria-labelledby="shortcut-help-title">
+        <div class="catalog-shell mini-shell">
+          <header class="catalog-header">
+            <div class="catalog-heading">
+              <h2 id="shortcut-help-title">Pintasan Keyboard (ala Blender)</h2>
+              <p>Tekan <kbd>?</kbd> atau <kbd>Esc</kbd> untuk menutup.</p>
+            </div>
+            <button id="shortcut-help-close" class="icon-btn icon-btn-l" type="button" aria-label="Tutup">
+              <svg class="icon"><use href="#i-close" /></svg>
+            </button>
+          </header>
+          <div class="catalog-body shortcut-grid">
+            <div>
+              <h4>Umum & File</h4>
+              <div class="shortcut-row"><span>Urungkan / Ulangi</span><kbd>Ctrl+Z / Ctrl+Shift+Z</kbd></div>
+              <div class="shortcut-row"><span>Simpan proyek (.kproj)</span><kbd>Ctrl+S</kbd></div>
+              <div class="shortcut-row"><span>Putar / jeda animasi</span><kbd>Spasi</kbd></div>
+              <div class="shortcut-row"><span>Reset kamera</span><kbd>Home</kbd></div>
+              <div class="shortcut-row"><span>Mode Pose</span><kbd>P</kbd></div>
+              <div class="shortcut-row"><span>Mode Edit Face</span><kbd>Tab</kbd></div>
+            </div>
+            <div>
+              <h4>Operasi Bagian (Object)</h4>
+              <div class="shortcut-row"><span>Geser / Putar / Skala</span><kbd>G / R / S</kbd></div>
+              <div class="shortcut-row"><span>Kunci sumbu / angka</span><kbd>G Z 0.1 Enter</kbd></div>
+              <div class="shortcut-row"><span>Tambah bagian</span><kbd>Shift+A</kbd></div>
+              <div class="shortcut-row"><span>Duplikat</span><kbd>Shift+D</kbd></div>
+              <div class="shortcut-row"><span>Hapus bagian</span><kbd>X / Delete</kbd></div>
+              <div class="shortcut-row"><span>Hide / Unhide / Lainnya</span><kbd>H / Alt+H / Shift+H</kbd></div>
+              <div class="shortcut-row"><span>Isolasi (Solo)</span><kbd>/</kbd></div>
+              <div class="shortcut-row"><span>Rename / Parent tulang</span><kbd>F2 / Ctrl+P</kbd></div>
+              <div class="shortcut-row"><span>Pilih semua / Batal</span><kbd>A / Alt+A</kbd></div>
+            </div>
+            <div>
+              <h4>Mode Edit Face (Tab)</h4>
+              <div class="shortcut-row"><span>Box / Kuas / Linked</span><kbd>B / C / L</kbd></div>
+              <div class="shortcut-row"><span>Hapus / Pisah face</span><kbd>X / P</kbd></div>
+              <div class="shortcut-row"><span>Pilih semua / Batal</span><kbd>A / Alt+A</kbd></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
